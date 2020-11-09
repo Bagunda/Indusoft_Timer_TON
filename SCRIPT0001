@@ -1,0 +1,3 @@
+TON1.PT = $PTs[0]
+$Qs[0] = TON1($ls[0])
+$ETs[0] = TON1.ET
