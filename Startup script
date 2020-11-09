@@ -1,0 +1,45 @@
+Dim i
+For i = 0 To $PTs->Size
+	$PTs[i] = 1500
+Next
+
+Dim TON1 : Set TON1 = New TON
+TON1.PT = $PTs[0]
+
+'-----Class TON -----
+Class TON
+	Dim PT //входная переменная
+	Private Q_
+	Private ET_
+	Private M_
+	Private StartTime_
+	
+	Private Sub Class_Initialize()
+		M_ = False
+		Q_ = False
+		ET_ = 0
+		StartTime_ = 0
+	End Sub
+	Public Default Function Run(Input)
+		If Not Input Then
+			Q_ = False
+			ET_ = 0
+			M_ = False
+		Else
+			If Not M_ Then
+				M_ = True
+				StartTime_ = Timer()
+			Else
+				If Not Q_ Then ET_ = ((Timer() - StartTime_ + 86400)*1000 Mod 86400000)
+			End If
+			If ET_ >= PT Then Q_ =True
+		End If
+		Run = Q_
+	End Function
+	Public Property Get ET()
+		ET = ET_
+	End Property
+	Public Property Get Q()
+		Q = Q_
+	End Property
+End Class
